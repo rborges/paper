@@ -2,13 +2,13 @@
  * e setar a direção que deve ser seguida
  */
 class Control {
-    init(Cart) {
+    init(cart) {
         document.addEventListener('keydown', function (event) {
             const keys = ['ArrowUp', 'ArrowDown', 'ArrowRight', 'ArrowLeft'];
             if (keys.indexOf(event.key) > -1) {
                 if (event.key !== 'undefined') {
-                    Cart.setDirection(event.key);
-                    Cart.move();
+                    cart.setDirection(event.key.replace('Arrow', '').toLowerCase());
+                    // cart.move();
                 }
             }
             event.preventDefault();

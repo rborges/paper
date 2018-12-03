@@ -3,9 +3,11 @@ class Cart {
         this.board = Board;
         this.container = document.querySelector('#board');
         this.context = Board.getContext();
-        this.speed = 256;
+        this.speed = 3.0;
         this.position;
-        this.direction;
+        this.direction = 'down';
+        this.x = 0;
+        this.y = 0;
     }
     setDirection(value) {
         this.direction = value;
@@ -15,15 +17,32 @@ class Cart {
         this._draw();
     }
     move() {
-        console.log(this.direction);
+
+        switch (this.direction) {
+            case 'up':
+                this.y -= this.speed;
+                break;
+            case 'down':
+                this.y += this.speed;
+                break;
+            case 'right':
+                this.x += this.speed;
+                break;
+            case 'left':
+                this.x -= this.speed;
+                break;
+        }
     }
     _draw() {
         this.context.fillRect(
-                this._getXAxys(),
-                this._getYAxys(),
+                this.x,
+                this.y,
                 this.context.width,
                 this.context.height
                 );
+    }
+    update() {
+        this.move();
     }
     _create() {
         this.context.width = 15;
@@ -37,7 +56,6 @@ class Cart {
          */
         return 'blue';
     }
-
     _getYAxys() {
         /*
          * função verificara uma area vazia na tabuleiro
@@ -52,7 +70,4 @@ class Cart {
          */
         return 15 + (Math.random() * this.board.getWidth() - 40);
     }
-
 }
-
-

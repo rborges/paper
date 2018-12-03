@@ -7,26 +7,21 @@
  * Iniciar e terminar um jogo
  */
 
-class Game {
-    init() {
+let Game = function () {
 
-        let board = new Board();
-        board.init();
+    this.board = new Board();
+    this.board.init();
 
-        let cart = new Cart(board);
-        cart.init();
+    this.cart = new Cart(this.board);
+    this.cart.init();
 
-        (new Control()).init(cart);
-    }
-    
-    loop(){
-//        função para controle de renderização do jogo
-        let now = Date.now();
-        let delta = now - then;
-        let then = now;
-        requestAnimationFrame(loop());
-    }
+    this.control = (new Control()).init(this.cart);
 
-}
-
-
+    this.loop = () => {
+        this.board.context.clearRect(0, 0, this.board.width, this.board.height);
+        this.cart.update();
+        this.cart._draw();
+        requestAnimationFrame(this.loop);
+    };
+    requestAnimationFrame(this.loop);
+};
